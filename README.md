@@ -17,7 +17,6 @@ The **CO**nstraint-based P**R**omiscuous Enzyme **A**nd Underground Metabolism M
 ### How to install:
 
 1. Clone the repository in the desired directory or download the [the latest release](https://github.com/mauricioamf/CORAL/releases) as a ZIP file
-1. Add folder to MATLAB path
 
 ## How to use
 
