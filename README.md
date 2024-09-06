@@ -21,7 +21,7 @@ The **CO**nstraint-based P**R**omiscuous Enzyme **A**nd Underground Metabolism M
 
 ## How to use
 
-The [`Protocol.m`](https://github.com/mauricioamf/CORAL/Protocol.m) file contains step-by-step instructions on how to run CORAL for your pcGEM to restructure its enzyme usage and include promiscuous enzyme activity.
+The [`Protocol.m`](https://github.com/mauricioamf/CORAL/blob/main/Protocol.m) file contains step-by-step instructions on how to run CORAL for your pcGEM to restructure its enzyme usage and include promiscuous enzyme activity.
 
 ## Citation
 
