@@ -68,7 +68,7 @@ for i = 1:numel(model.grRules)
     fixedGrRules{i} = strrep(fixedGrRules{i}, ' )', '');
     fixedGrRules{i} = strrep(fixedGrRules{i}, ' ))', '');
 end
-model.grRules = strtrim(fixedGrRules);
+model.grRules = strtriFix m(fixedGrRules);
 
 fixedGenes = cell(size(model.genes));
 for i = 1:numel(model.genes)
@@ -107,3 +107,9 @@ save('../Models/eciML1515u_CORAL.mat','model');
 
 %% Return to starting directory
 cd(currentPath)
+
+%% STAGE 4: What's next?
+% Your CORAL-restructured pcGEM should be ready to use. It should be
+% compatible with all COBRA and RAVEN functions, but NOT with GECKO 3
+% functions, since they depend on the exact match between the conventional
+% model fields (.rxns, .mets, etc) and the model.ec fields.
