@@ -15,7 +15,7 @@ tic
 fprintf('\n' + "Starting FVA for models without underground reactions");
 
 % load('../Models/eciML1515u_CORAL_DLKcat.mat');
-load('../Models/eciML1515u_TurNuP_CORAL.mat');
+% load('../Models/eciML1515u_TurNuP_CORAL.mat');
 
 model = buildRxnGeneMat(model);
 enzymeTable = getEnzymeTable(model);
@@ -53,7 +53,7 @@ ranges = maxFlux - minFlux;
 % Export results table
 varNamesT = {'enzymes' 'ranges' 'minUsage' 'maxUsage'};
 FVAtable  = table(rxnNamesList,ranges,minFlux,maxFlux,'VariableNames', varNamesT);
-FVA_filename = "FVA_enzymes_eciML1515u_CORAL_TurNuP_noBio_noUnd_Ratio.csv";
+FVA_filename = "FVA_enzymes_eciML1515u_CORAL_DLKcat_noBio_noUnd_Ratio.csv";
 writetable(FVAtable, FVA_filename, 'Delimiter','\t')
 fprintf('\n');
 fprintf('Export finished');
@@ -67,7 +67,7 @@ clear
 fprintf('\n' + "Starting FVA for models with underground reactions");
 
 % load('../Models/eciML1515u_CORAL_DLKcat.mat');
-load('../Models/eciML1515u_TurNuP_CORAL.mat');
+% load('../Models/eciML1515u_TurNuP_CORAL.mat');
 
 model = buildRxnGeneMat(model);
 enzymeTable = getEnzymeTable(model);
@@ -99,7 +99,7 @@ ranges = maxFlux - minFlux;
 % Export results table
 varNamesT = {'enzymes' 'ranges' 'minUsage' 'maxUsage'};
 FVAtable  = table(rxnNamesList,ranges,minFlux,maxFlux,'VariableNames', varNamesT);
-FVA_filename = "FVA_enzymes_eciML1515u_CORAL_TurNuP_Und_noBio_Ratio.csv";
+FVA_filename = "FVA_enzymes_eciML1515u_CORAL_DLKcat_Und_noBio_Ratio.csv";
 writetable(FVAtable, FVA_filename, 'Delimiter','\t')
 fprintf('\n');
 fprintf('Export finished');
@@ -112,7 +112,7 @@ clear
 fprintf('\n' + "Starting FVA for models without underground reactions and fixing biomass");
 
 % load('../Models/eciML1515u_CORAL_DLKcat.mat');
-load('../Models/eciML1515u_TurNuP_CORAL.mat');
+% load('../Models/eciML1515u_TurNuP_CORAL.mat');
 
 model = buildRxnGeneMat(model);
 enzymeTable = getEnzymeTable(model);
@@ -155,7 +155,7 @@ ranges = maxFlux - minFlux;
 % Export results table
 varNamesT = {'enzymes' 'ranges' 'minUsage' 'maxUsage'};
 FVAtable  = table(rxnNamesList,ranges,minFlux,maxFlux,'VariableNames', varNamesT);
-FVA_filename = "FVA_enzymes_eciML1515u_CORAL_TurNuP_noUnd_Bio_Ratio.csv";
+FVA_filename = "FVA_enzymes_eciML1515u_CORAL_DLKcat_noUnd_Bio_Ratio.csv";
 writetable(FVAtable, FVA_filename, 'Delimiter','\t')
 fprintf('\n');
 fprintf('Export finished');
@@ -168,7 +168,7 @@ clear
 fprintf('\n' + "Starting FVA for models with underground reactions and fixing biomass");
 
 % load('../Models/eciML1515u_CORAL_DLKcat.mat');
-load('../Models/eciML1515u_TurNuP_CORAL.mat');
+% load('../Models/eciML1515u_TurNuP_CORAL.mat');
 
 % Constraints and other parameters
 biomassRxnID = 'BIOMASS_Ec_iML1515_core_75p37M';
@@ -201,7 +201,7 @@ ranges = maxFlux - minFlux;
 % Export results table
 varNamesT = {'enzymes' 'ranges' 'minUsage' 'maxUsage'};
 FVAtable  = table(rxnNamesList,ranges,minFlux,maxFlux,'VariableNames', varNamesT);
-FVA_filename = "FVA_enzymes_eciML1515u_CORAL_TurNuP_Und_Bio_Ratio.csv";
+FVA_filename = "FVA_enzymes_eciML1515u_CORAL_DLKcat_Und_Bio_Ratio.csv";
 writetable(FVAtable, FVA_filename, 'Delimiter','\t')
 fprintf('\n');
 fprintf('Export finished');

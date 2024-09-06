@@ -4,7 +4,7 @@ changeCobraSolverParams('LP', 'feasTol', 1e-9);
 clear;clc
 
 %% Predict usage of underground reations
-load('../Models/eciML1515u_CORAL_DLKcat.mat');
+% load('../Models/eciML1515u_CORAL_DLKcat.mat');
 % load('../Models/eciML1515u_CORAL_TurNuP.mat');
 
 %% Define constraints and other parameters
@@ -58,7 +58,7 @@ model = changeRxnBounds(model, 'EX_glc__D_e', -1.5, 'l'); % D-glucose
 % model = changeRxnBounds(model, 'EX_fru_e', -1.4, 'l'); % fructose
 % vBio = 0.1;
 
-filename = "SKO_redist_Delta_Ratio_glucose_TurNuP.csv";
+filename = "SKO_redist_Delta_Ratio_glucose.csv";
 
 SolutionVbio = optimizeCbModel(model);
 vBio = SolutionVbio.f;
@@ -277,7 +277,7 @@ KOresultsE1used(notUsed,:) = [];
 % KOresultsE1used(zeroGrowth,:) = [];
 
 %%
-save("SKO_redist_Delta_Ratio_glucose_TurNuP.mat", "-v7.3")
+save("SKO_redist_Delta_Ratio_glucose.mat", "-v7.3")
 
 %% Get subpool deltas
 subpools = {};

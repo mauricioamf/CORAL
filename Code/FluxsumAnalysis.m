@@ -2,7 +2,6 @@
 % changeCobraSolver('gurobi', 'LP');
 % changeCobraSolverParams('LP', 'feasTol', 1e-9);
 initCobraToolbox(false)
-cd("/home/mferreira/Doutorado/4.Underground_metabolism/underground_metabolism/Code/");
 
 %%
 clear;clc
@@ -10,14 +9,12 @@ clear;clc
 %% Loading model and results
 % load('../Models/eciML1515u_v2_stage2_DLKcat.mat');
 
-% load('../Models/eciML1515u_CORAL_BRENDA.mat');
 % load('../Models/eciML1515u_CORAL_DLKcat_Ratio.mat');
 % load('SKO_redist_E1_glucose.mat');
 
-load('SKO_redist_Delta_Ratio_glucose_TurNuP.mat', 'SolutionEKcat', 'KOresultsE1used');
-load('../Models/eciML1515u_TurNuP_CORAL_Ratio.mat');
+% load('SKO_redist_Delta_Ratio_glucose_DLKcat.mat', 'SolutionEKcat', 'KOresultsE1used');
+% load('../Models/eciML1515u_DLKcat_CORAL_Ratio.mat');
 
-% load('sftp://mauricio@200.235.253.50/home/mauricio/mauricio_HDnovo/underground_metabolism/DKO_ratio_E1_glucose.mat', 'KOresultsE1used', 'DKOresultsE1used')
 
 %% Calculate mean and median basal flux-sums for single KOs
 tic
@@ -137,7 +134,7 @@ end
 modelMetsFiltered = model.mets(idxMet);
 
 %% Export the table
-filename = "FSmatrix_SKO_glucose_TurNuP.csv";
+filename = "FSmatrix_SKO_glucose.csv";
 writecell(FSmatrix, filename, 'Delimiter','\t')
 
 %%

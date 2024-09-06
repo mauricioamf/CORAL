@@ -7,18 +7,15 @@
 clear;clc
 
 %% Loading model and results
-% load('../Models/eciML1515u_v2_stage2_DLKcat.mat');
-
-% load('../Models/eciML1515u_CORAL_BRENDA.mat');
 % load('SKO_redist_E1_glucose.mat')
 
 % FSmatrix = readmatrix("FSmatrix_SKO_glucose.csv");
 % FSmatrixWT = readmatrix("FSmatrix_SKO_glucose_WT.csv");
 
-load('../Models/eciML1515u_TurNuP_CORAL_Ratio.mat');
-
-FSmatrix = readmatrix("FSmatrix_SKO_glucose_TurNuP.csv");
-FSmatrixWT = readmatrix("FSmatrix_SKO_glucose_TurNuP_WT.csv");
+% load('../Models/eciML1515u_TurNuP_CORAL_Ratio.mat');
+% 
+% FSmatrix = readmatrix("FSmatrix_SKO_glucose_TurNuP.csv");
+% FSmatrixWT = readmatrix("FSmatrix_SKO_glucose_TurNuP_WT.csv");
 
 %% Calculate delta
 FSmatrix_Delta = FSmatrix - FSmatrixWT;
@@ -40,7 +37,7 @@ FSmatrix_Delta = FSmatrix_Delta(:, ~columns_to_remove);
 modelMetsDelta = modelMets(~columns_to_remove,:);
 
 %% Export the table
-filename = "FSmatrix_SKO_glucose_TurNuP_Delta.csv";
+filename = "FSmatrix_SKO_glucose_DLKcat_Delta.csv";
 writematrix(FSmatrix_Delta, filename, 'Delimiter','\t')
 
 %% Calculate ratio

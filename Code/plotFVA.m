@@ -5,10 +5,10 @@
 clc;clear
 
 %%
-noBio_noUnd = readtable("../Results/FVA_enzymes_eciML1515u_CORAL_TurNuP_noBio_noUnd_Ratio.csv");
-noBio_Und = readtable("../Results/FVA_enzymes_eciML1515u_CORAL_TurNuP_noBio_Und_Ratio.csv");
-Bio_noUnd = readtable("../Results/FVA_enzymes_eciML1515u_CORAL_TurNuP_Bio_noUnd_Ratio.csv");
-Bio_Und = readtable("../Results/FVA_enzymes_eciML1515u_CORAL_TurNuP_Bio_Und_Ratio.csv");
+noBio_noUnd = readtable("../Results/FVA_enzymes_eciML1515u_CORAL_DLKcat_noBio_noUnd_Ratio.csv");
+noBio_Und = readtable("../Results/FVA_enzymes_eciML1515u_CORAL_DLKcat_noBio_Und_Ratio.csv");
+Bio_noUnd = readtable("../Results/FVA_enzymes_eciML1515u_CORAL_DLKcat_Bio_noUnd_Ratio.csv");
+Bio_Und = readtable("../Results/FVA_enzymes_eciML1515u_CORAL_DLKcat_Bio_Und_Ratio.csv");
 
 %%
 distributions = {noBio_noUnd.ranges, noBio_Und.ranges, Bio_noUnd.ranges, Bio_Und.ranges};

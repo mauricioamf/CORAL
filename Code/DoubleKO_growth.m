@@ -4,12 +4,8 @@
 clear;clc
 
 %% Predict usage of underground reations
-% load('../Models/eciML1515u_v2_stage2_DLKcat.mat');
-
-% load('../Models/eciML1515u_CORAL_BRENDA.mat');
-% load('../Models/eciML1515u_CORAL_DLKcat.mat');
-
-load('../Models/eciML1515u_TurNuP_CORAL.mat');
+load('../Models/eciML1515u_CORAL_DLKcat.mat');
+% load('../Models/eciML1515u_TurNuP_CORAL.mat');
 
 %% Define constraints and other parameters
 enzymeTable = getEnzymeTable(model);
@@ -494,9 +490,9 @@ end
 exportTable = renamevars(exportTable, ["Var1","Var2","Var3","Var4","Var5","Var6","Var7","Var8","Var9"],...
     ["FirstKO","FirstMu","FirstSubpoolID","FirstSubpoolNum","EsKcatNum","DKO","DKOMu","DKOSubpoolID","DKOSubpoolNum"]);
 
-filename = "DKO_ratio_glucose_E1_TurNuP.csv";
+filename = "DKO_ratio_glucose_E1.csv";
 writetable(exportTable, filename, 'Delimiter','\t')
-% save("DKO_ratio_arabinose_E1.mat", "-v7.3")
+% save("DKO_ratio_glucose_E1.mat", "-v7.3")
 toc
 
 msgbox('Your code has finished running!', 'Notification');

@@ -3,8 +3,8 @@ clear;clc
 % changeCobraSolver('gurobi', 'LP');
 
 %% Predict usage of underground reations
-% load('../Models/eciML1515u_CORAL_DLKcat_Ratio.mat');
-load('../Models/eciML1515u_CORAL_TurNuP.mat');
+% load('../Models/eciML1515u_DLKcat_CORAL.mat');
+% load('../Models/eciML1515u_CORAL_TurNuP.mat');
 
 %% Define constraints and other parameters
 % enzymeTable = getEnzymeTable(model);
