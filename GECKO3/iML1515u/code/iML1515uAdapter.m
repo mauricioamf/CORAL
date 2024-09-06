@@ -5,7 +5,7 @@ classdef iML1515uAdapter < ModelAdapter
             
             % Directory where all model-specific files and scripts are kept.
             % Is assumed to follow the GECKO-defined folder structure.
-            obj.params.path = fullfile('~/CORAL/GECKO3/', 'iML1515u');
+            obj.params.path = fullfile('/absolute_path/CORAL/GECKO3/', 'iML1515u');
 
 			% Path to the conventional GEM that this ecModel will be based on.
 			obj.params.convGEM = fullfile(obj.params.path,'models','iML1515u_v2.yml');

@@ -1,39 +1,60 @@
+%% Protocol for generating a pcGEM with the CORAL Toolbox formulation. 
 %
-% Protocol for running CORAL Toolbox. To be expanded.
+% This script contain step-by-step instructions on how to run CORAL for
+% your pcGEM to restructure its enzyme usage. It replicates the Escherichia
+% coli pcGEM used for all analyses in the accompanying manuscript. Please
+% adjust all variables, paths and data for your organism as needed.
+% 
+% This restructuring was tested only with a GECKO 3 version of the 
+% eciML1515 model. Regardless, it should work for any pcGEM reconstructed 
+% using GECKO 3 up to version 3.1.3. Please open an Issue at the GitHub
+% page in case it does not work for your pcGEM.
 %
-%%
-% initCobraToolbox(false);
-% changeCobraSolver('gurobi', 'LP');
-cd /home/mferreira/Doutorado/4.Underground_metabolism/underground_metabolism/Code/
+% Your pcGEM might require curation and evaluation before and/or after the
+% restructuring using CORAL. 
+%
+% The CORAL Toolbox might receive updates after the manuscript is 
+% published. Refer to version 1.0.0 if you are looking into reproducing the
+% results in the manuscript.
+%
+% The functions used for restructuring the pcGEM are:
+%
+%   - expandEnzComplex.m
+%   - getEnzymeSubpools.m
+%   - CreateUndField.m
 
-%% Cleaning the workspace and the command window and adjusting settings
-clear;clc
+%% Preparation for the pcGEM restructuring
+% Make sure all dependencies are installed and working properly.
+% Initialize COBRA
+initCobraToolbox(false);
+changeCobraSolver('gurobi', 'LP');
 
-%% Loading the enzyme-constrained model and other data
-% model = readYAMLmodel('../Models/eciML1515_underground_stage2_BRENDA.yml');
-% load('../Models/eciML1515_underground_stage2_BRENDA.mat');
+% Check that RAVEN and GECKO are working.
+checkInstallation;
+GECKOInstaller.install
 
-% model = readYAMLmodel('../Models/eciML1515_underground_stage2_DLKcat.yml');
-% load('../Models/eciML1515_underground_stage2_DLKcat.mat');
+% Load the enzyme-constrained model.
+load('./Models/eciML1515u_v2_stage2_DLKcat.mat');
 
-% model = readYAMLmodel('../Models/eciML1515u_v2_stage2_BRENDA.yml');
-% load('../Models/eciML1515u_v2_stage2_BRENDA.mat');
-
-% model = readYAMLmodel('../Models/eciML1515u_v2_stage2_DLKcat.yml');
-load('../Models/eciML1515u_v2_stage2_DLKcat.mat');
-% load('../Models/eciML1515u_v2_stage3_DLKcat.mat');
-
-% load('../Models/eciML1515u_TurNuP.mat');
-
-adapterLocation = '/home/mferreira/Doutorado/4.Underground_metabolism/underground_metabolism/GECKO3/iML1515u/iML1515uAdapter.m';
-% adapterLocation = '/home/mferreira/Doutorado/4.Underground_metabolism/underground_metabolism/GECKO3/iML1515u_TurNuP/code/iML1515uAdapter.m';
+% Load the modelAdapter. It should be the same as used for reconstructing
+% the pcGEM. Use the absolute path of the modelAdapter directory.
+adapterLocation = '/absolute_path/CORAL/GECKO3/iML1515u/code/iML1515uAdapter.m';
+% Open the modelAdapter file and adjust the path on the obj.params.path 
+% variable before proceeding.
 modelAdapter = ModelAdapterManager.setDefault(adapterLocation);
 
-%% STEP 1 Simplify GPR rules by splitting reactions catalysed by enzyme complexes into multiple reactions
+%% STAGE 1: Simplify GPR rules
+% STEP 1: Change directory to Code folder.
+currentPath = pwd;
+cd ./Code/
+
+% STEP 2: Split reactions catalysed by enzyme complexes into multiple 
+% reactions. This step does not require additional inputs from the user.
 model = expandEnzComplex(model);
 
-% Manual corrections to model
-% model.grRules{965,1} = 'b0650';
+% (optional) STEP 2.1: The eciML1515 model requires manual corrections to GPR rules to proceed 
+% to the next stage. Make sure your model also has the correct format for
+% GPR rules and other fields.
 model = rmfield(model, "rules");
 
 fixedGrRules = cell(size(model.grRules));
@@ -62,32 +83,27 @@ for i = 1:numel(model.genes)
 end
 model.genes = strtrim(fixedGenes);
 
-% Save checkpoint
-% save('checkpoint1');
-% load('checkpoint1.mat');
+% STEP 3: Save checkpoint.
+save('CORAL_checkpoint1');
+% load('CORAL_checkpoint1.mat');
 
-%% STEP 2 Restructure the model to include enzyme usage of promiscuous enzymes as enzyme subpools
+%% STAGE 2: Restructure the model
+% STEP 4: Include enzyme usage of promiscuous enzymes as enzyme subpools.
+% This step does not require additional inputs from the user.
 model = getEnzymeSubpools(model);
 
-% Save checkpoint
-% save('checkpoint2');
-% load('checkpoint2.mat');
+% STEP 5: Save checkpoint.
+save('CORAL_checkpoint2');
+% load('CORAL_checkpoint2.mat');
 
-%% STEP 3 Organize new information into the new .und field
+% STEP 6: Organize new information into the new .und field
 model = CreateUndField(model, modelAdapter);
 
-%% Test if model can produce growth
-% testEcoliModels(model, 2);
-% testEcoliModels_iJO1366(model, 2);
+%% STAGE 3: Export model
+% STEP 7: Export to YAML format.
+writeYAMLmodel(model, '../Models/eciML1515u_CORAL.yml');
+% STEP 8: Export to MAT format.
+save('../Models/eciML1515u_CORAL.mat','model');
 
-%% Export model
-% writeYAMLmodel(model, '../Models/eciML1515u_BRENDA.yml');
-% save('../Models/eciML1515u_BRENDA.mat','model');
-
-% writeYAMLmodel(model, '../Models/eciML1515u_DLKcat.yml');
-% save('../Models/eciML1515u_DLKcat_CORAL_test.mat','model');
-
-save('../Models/eciML1515u_DLKcat_CORAL.mat','model');
-
-%%
-toc
+%% Return to starting directory
+cd(currentPath)
