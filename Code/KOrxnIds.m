@@ -1,0 +1,21 @@
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P0A6P9_1', 0, 'b'); % enolase
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P0A6T1_1', 0, 'b'); % glucose-6-phosphate isomerase
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P23538_1', 0, 'b'); % phosphoenolpyruvate synthase
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P0AD61_1', 0, 'b'); % pyruvate kinase INFEASIBLE
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P07003_1', 0, 'b'); % pyruvate oxidase
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P0A7B1_1', 0, 'b'); % polyphosphate kinase
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P0A796_1', 0, 'b'); % phosphofructokinase (s7p)
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P52697_1', 0, 'b'); % 6-phosphogluconolactonase
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P27302_1', 0, 'b'); % transketolase
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P77580_1', 0, 'b'); % acetaldehyde dehydrogenase (acetylating)
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P27550_1', 0, 'b'); % acetyl-CoA synthetase
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P26616_1', 0, 'b'); % malic enzyme 1
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P76558_1', 0, 'b'); % malic enzyme 2
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P0ABH7_1', 0, 'b'); % citrate synthase
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P14407_1', 0, 'b'); % fumarase
+
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P00944_1', 0, 'b');
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P77747_1', 0, 'b');
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P06960_1', 0, 'b');
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P23721_1', 0, 'b');
+% modelKO = changeRxnBounds(modelKO, 'usage_prot_P77366_1', 0, 'b');
