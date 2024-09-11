@@ -3,7 +3,7 @@ function combinedTable = getRxnTable(ecModel, rxnsInd, substrateMets, productMet
 %   Generated a table containing data from all reactions catalysed by
 %   promiscuous enzymes. The table is then used with the
 %   'getSubEnzymePools' function to obtain the subenzymes. This function is
-%   not intended to be called outside of 'getSubEnzymePools' or for any 
+%   not intended to be called outside of 'getEnzymePools' or for any 
 %   other usage.
 %
 %   Usage
@@ -33,7 +33,7 @@ if ~isfield(ecModel,'ec')
 end
 
 % Retrieve rxn IDs associated reactions containing kcat values
-ecModel = buildRxnGeneMat(ecModel);
+% ecModel = buildRxnGeneMat(ecModel);
 
 ecRxns = cell(numel(rxnsInd), 1);
 

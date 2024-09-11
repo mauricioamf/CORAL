@@ -26,7 +26,7 @@ The [`Protocol.m`](https://github.com/mauricioamf/CORAL/blob/main/Protocol.m) fi
 
 If you use the CORAL Toolbox, please cite:
 
-> Ferreira et al. _Integrating promiscuous enzyme activities in protein-constrained models pinpoints the role of underground metabolism in robustness of metabolic phenotypes_ bioRxiv (2024). [DOI: 10.1101/2024.09.06.611666](https://doi.org/10.1101/2024.09.06.611666)
+> Ferreira et al. _Integrating promiscuous enzyme activities in protein-constrained models pinpoints the role of underground metabolism in robustness of metabolic phenotypes_ bioRxiv (2024). [DOI: pending](https://doi.org/10.1234/1234.12.12.123456)
 
 ## Why the name "CORAL"?
 

@@ -36,11 +36,16 @@ rxnsInd = num2cell(1:1:length(ecModel.rxns))';
 %% Loop over reactions with 'AND' GPR rules and slip into partial reactions
 hasAND = {};
 
+if isfield(ecModel,'rules')
+    ecModel = rmfield(ecModel, "rules");
+end
+
 % Iterate over all reactions in the model
 for i = 1:length(ecModel.rxns)
+    currentRxnMets = substrateMets{i};
 
     % Check if the GPR contains an 'AND'
-    if contains(ecModel.grRules{i}, ' and ')
+    if contains(ecModel.grRules{i}, ' and ') && any(startsWith(currentRxnMets, 'prot_'))
 
         % Print reaction
         disp(['Working on reaction ' ecModel.rxns{i}]);
@@ -225,6 +230,10 @@ for rxn5 = 1:length(partialRxnsIDs)
 end
 
 ecModel.rxns(partialRxns) = partialRxnsIDs;
+
+if isfield(ecModel,'rules')
+    ecModel = rmfield(ecModel, "rules");
+end
 
 %% All finished
 numAND = size(hasAND,1);

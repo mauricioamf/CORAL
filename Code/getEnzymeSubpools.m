@@ -34,7 +34,7 @@ if ~isfield(ecModel,'ec')
 end
 
 %% Retrieve IDs and coefficients of mets and rxns associated with kcats
-disp("Gathering enzyme data from model...")
+disp("Gathering enzyme data from model... (1/5)")
 
 rxnsInd = num2cell(1:1:length(ecModel.rxns))';
 
@@ -88,7 +88,7 @@ enzymeMets = cell(length(combinedTableSingles.mets), 1);
 for i = 1:length(combinedTableSingles.mets)
     currentCell = combinedTableSingles.mets{i};
     for j = 1:length(currentCell)
-        enzymeMets{i,1} = char(currentCell(contains(currentCell, "prot_"), 1));
+        enzymeMets{i,1} = char(currentCell(startsWith(currentCell, "prot_"), 1));
     end
 end
 
@@ -97,8 +97,18 @@ combinedTableSingles.enzymeMets = enzymeMets;
 % Reorder table first by gene, then by MW/kcat coeffs
 combinedTableSingles = sortrows(combinedTableSingles,["genes" "enzCoeffs"], ["ascend" "descend"]);
 
+% Remove rows without enzymeMets
+toDel = [];
+for dd = 1:length(combinedTableSingles.enzymeMets)
+    if isempty(combinedTableSingles.enzymeMets{dd})
+        toDel = [toDel dd];
+    end
+end
+toDel = toDel';
+combinedTableSingles(toDel,:) = [];
+
 %% Rename enzyme pseudo-metabolites sequentially
-disp("Constructing enzyme subpools...")
+disp("Constructing enzyme subpools... (2/5)")
 
 enzCounts = struct();
 
@@ -145,13 +155,11 @@ for sbp = 1:length(combinedTableSingles.enzymeMets)
     end
 end
 
-
-
 % Replace enzyme names in mets field
 for i = 1:length(combinedTableSingles.mets)
     currentCell = combinedTableSingles.mets{i};
     for j = 1:length(currentCell)
-        if convertCharsToStrings(currentCell{j}) == convertCharsToStrings(char(currentCell(contains(currentCell, "prot_"), 1)))
+        if convertCharsToStrings(currentCell{j}) == convertCharsToStrings(char(currentCell(startsWith(currentCell, "prot_"), 1)))
             combinedTableSingles.mets{i}{j} = combinedTableSingles.enzymeMets{i};
         end
     end
@@ -172,7 +180,7 @@ for i = 1:length(metsToAdd.compartments)
 end
 
 %% Apply changes in enzyme usage to model
-disp("Renaming preexisting enzyme pseudo-metabolites...")
+disp("Renaming preexisting enzyme pseudo-metabolites... (3/5)")
 
 % Rename current usage_prot_ pseudoreactions
 enzymeIds = find(~cellfun('isempty',strfind(ecModel.rxns,'usage_prot')));
@@ -185,13 +193,27 @@ ecModel.rxnNames(enzymeIds) = enzymesToChange;
 metEnzymeIds = find(~cellfun('isempty',strfind(ecModel.mets,'prot_')));
 metEnzymeIds(end-1:end) = []; % Remove usage_prot_standard
 metsToChange = ecModel.mets(metEnzymeIds);
+toDel = [];
+for mets = 1:length(metsToChange)
+    if ~startsWith(metsToChange{mets}, 'prot')
+        toDel = [toDel mets];
+    end
+end
+metsToChange(toDel) = [];
+metEnzymeIds(toDel) = [];
 metsToChange = cellfun(@(x) strrep(x, 'prot_', 'pool_'), metsToChange, 'UniformOutput', false);
 ecModel.mets(metEnzymeIds) = metsToChange;
 ecModel.metNames(metEnzymeIds) = metsToChange;
 
 % Add metabolites
-disp("Adding enzyme subpools pseudo-metabolites to model...")
+disp("Adding enzyme subpools pseudo-metabolites to model... (4/5)")
 ecModel = addMets(ecModel, metsToAdd);
+
+% equationProts = cell(size(equations.mets));
+% for eqs = 1:length(equationProts)
+%     currentEq = equations.mets{eqs};
+%     equationProts{eqs,1} = currentEq{find(startsWith(currentEq, 'prot_'))};
+% end
 
 % Replace reactions with new metabolites
 ecModel = changeRxns(ecModel, equations.rxns, equations, 1);
@@ -202,7 +224,7 @@ ecModel = sortIdentifiers(ecModel);
 % load('checkpoint2.mat');
 
 %% Add subpool pseudo-reactions for newly-created enzymes
-disp("Creating enzyme subpools pseudo-reactions for newly-created pools...")
+disp("Creating enzyme subpools pseudo-reactions for newly-created pools... (5/5)")
 
 enzymesToAdd = combinedTableSingles.enzymeMets;
 

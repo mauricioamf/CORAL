@@ -19,6 +19,7 @@
 %
 % The functions used for restructuring the pcGEM are:
 %
+%   - fixGPRrules.m
 %   - expandEnzComplex.m
 %   - getEnzymeSubpools.m
 %   - CreateUndField.m
@@ -48,61 +49,44 @@ modelAdapter = ModelAdapterManager.setDefault(adapterLocation);
 currentPath = pwd;
 cd ./Code/
 
-% STEP 2: Split reactions catalysed by enzyme complexes into multiple 
+% (optional) STEP 2: The eciML1515 model requires corrections to GPR 
+% rules to proceed to the next stage. Make sure your model also has the 
+% correct format for GPR rules and other fields. This includes but is not 
+% limited to leading and trailing spaces, non-conventional characters, 
+% parenthesis or brackets. 
+% 
+% Potential sources for errors also include duplicated genes, misspelled
+% genes, fields with inconsistent sizes, and non-convetional formating of 
+% GPR rules.
+% 
+% The funcion fixGPRrules does not extensively check for irregularities in 
+% the model.grRules field and some manual inspections might be necessary.
+model = fixGPRrules(model);
+
+% STEP 3: Split reactions catalysed by enzyme complexes into multiple 
 % reactions. This step does not require additional inputs from the user.
 model = expandEnzComplex(model);
 
-% (optional) STEP 2.1: The eciML1515 model requires manual corrections to GPR rules to proceed 
-% to the next stage. Make sure your model also has the correct format for
-% GPR rules and other fields.
-model = rmfield(model, "rules");
-
-fixedGrRules = cell(size(model.grRules));
-for i = 1:numel(model.grRules)
-    fixedGrRules{i} = strrep(model.grRules{i}, '( ', '');
-    fixedGrRules{i} = strrep(fixedGrRules{i}, '(( ', '');
-    fixedGrRules{i} = strrep(fixedGrRules{i}, '(', '');
-    fixedGrRules{i} = strrep(fixedGrRules{i}, '((', '');
-    fixedGrRules{i} = strrep(fixedGrRules{i}, ')', '');
-    fixedGrRules{i} = strrep(fixedGrRules{i}, '))', '');
-    fixedGrRules{i} = strrep(fixedGrRules{i}, ' )', '');
-    fixedGrRules{i} = strrep(fixedGrRules{i}, ' ))', '');
-end
-model.grRules = strtriFix m(fixedGrRules);
-
-fixedGenes = cell(size(model.genes));
-for i = 1:numel(model.genes)
-    fixedGenes{i} = strrep(model.genes{i}, '( ', '');
-    fixedGenes{i} = strrep(fixedGenes{i}, '(( ', '');
-    fixedGenes{i} = strrep(fixedGenes{i}, '(', '');
-    fixedGenes{i} = strrep(fixedGenes{i}, '((', '');
-    fixedGenes{i} = strrep(fixedGenes{i}, ')', '');
-    fixedGenes{i} = strrep(fixedGenes{i}, '))', '');
-    fixedGenes{i} = strrep(fixedGenes{i}, ' )', '');
-    fixedGenes{i} = strrep(fixedGenes{i}, ' ))', '');
-end
-model.genes = strtrim(fixedGenes);
-
-% STEP 3: Save checkpoint.
+% STEP 4: Save checkpoint.
 save('CORAL_checkpoint1');
 % load('CORAL_checkpoint1.mat');
 
 %% STAGE 2: Restructure the model
-% STEP 4: Include enzyme usage of promiscuous enzymes as enzyme subpools.
+% STEP 5: Include enzyme usage of promiscuous enzymes as enzyme subpools.
 % This step does not require additional inputs from the user.
 model = getEnzymeSubpools(model);
 
-% STEP 5: Save checkpoint.
+% STEP 6: Save checkpoint.
 save('CORAL_checkpoint2');
 % load('CORAL_checkpoint2.mat');
 
-% STEP 6: Organize new information into the new .und field
+% STEP 7: Organize new information into the new .und field
 model = CreateUndField(model, modelAdapter);
 
 %% STAGE 3: Export model
-% STEP 7: Export to YAML format.
+% STEP 8: Export to YAML format.
 writeYAMLmodel(model, '../Models/eciML1515u_CORAL.yml');
-% STEP 8: Export to MAT format.
+% STEP 9: Export to MAT format.
 save('../Models/eciML1515u_CORAL.mat','model');
 
 %% Return to starting directory
