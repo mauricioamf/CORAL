@@ -50,16 +50,16 @@ currentPath = pwd;
 cd ./Code/
 
 % (optional) STEP 2: The eciML1515 model requires corrections to GPR 
-% rules to proceed to the next stage. Make sure your model also has the 
+% rules to proceed to the next stage. Make sure your model has the 
 % correct format for GPR rules and other fields. This includes but is not 
 % limited to leading and trailing spaces, non-conventional characters, 
 % parenthesis or brackets. 
 % 
 % Potential sources for errors also include duplicated genes, misspelled
-% genes, fields with inconsistent sizes, and non-convetional formating of 
+% genes, fields with inconsistent sizes, and non-conventional formatting of 
 % GPR rules.
 % 
-% The funcion fixGPRrules does not extensively check for irregularities in 
+% The function fixGPRrules does not extensively check for irregularities in 
 % the model.grRules field and some manual inspections might be necessary.
 model = fixGPRrules(model);
 
@@ -94,6 +94,6 @@ cd(currentPath)
 
 %% STAGE 4: What's next?
 % Your CORAL-restructured pcGEM should be ready to use. It should be
-% compatible with all COBRA and RAVEN functions, but NOT with GECKO 3
+% compatible with all COBRA and RAVEN functions, but not with GECKO 3
 % functions, since they depend on the exact match between the conventional
 % model fields (.rxns, .mets, etc) and the model.ec fields.
